@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cc1024201.github.io</id>
-    <title>Zhcao.Blog</title>
-    <updated>2021-05-26T15:15:25.486Z</updated>
+    <title>zhcao.blog</title>
+    <updated>2021-05-26T15:16:08.167Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cc1024201.github.io"/>
     <link rel="self" href="https://cc1024201.github.io/atom.xml"/>
     <subtitle>温故而知新</subtitle>
     <logo>https://cc1024201.github.io/images/avatar.png</logo>
     <icon>https://cc1024201.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2021, Zhcao.Blog</rights>
+    <rights>All rights reserved 2021, zhcao.blog</rights>
     <entry>
         <title type="html"><![CDATA[Hello World]]></title>
         <id>https://cc1024201.github.io/post/about/</id>
