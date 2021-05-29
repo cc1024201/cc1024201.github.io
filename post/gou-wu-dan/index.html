@@ -2,17 +2,19 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>阿里云 Spring Boot 脚手架 | zhcao.blog</title>
+<title>购物单 | zhcao.blog</title>
 <link rel="shortcut icon" href="https://cc1024201.github.io/favicon.ico?v=1622256587260">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cc1024201.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="阿里云 Spring Boot 脚手架 | zhcao.blog - Atom Feed" href="https://cc1024201.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="购物单 | zhcao.blog - Atom Feed" href="https://cc1024201.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="https://start.aliyun.com/
-" />
+    <meta name="description" content="import java.util.Scanner;
+public class Main {
+public static void main(String[] args) {
+Scanner sc = new Scanner(System.i..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -75,21 +77,111 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              阿里云 Spring Boot 脚手架
+              购物单
             </h2>
             <div class="post-info">
               <span>
-                2021-05-26
+                2021-05-29
               </span>
               <span>
-                1 min read
+                3 min read
               </span>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>https://start.aliyun.com/</p>
+                <p>import java.util.Scanner;</p>
+<p>public class Main {<br>
+public static void main(String[] args) {<br>
+Scanner sc = new Scanner(System.in);<br>
+int money = sc.nextInt();<br>
+int n = sc.nextInt();<br>
+if(n&lt;=0||money&lt;=0) System.out.println(0);</p>
+<pre><code>    good[] Gs = new good[n+1];
+    for (int i = 1; i &lt;= n; i++) {
+        int v = sc.nextInt();
+        int p = sc.nextInt();
+        int q = sc.nextInt();
+        Gs[i] = new good(v,p,q);
+
+        if(q&gt;0){
+            if(Gs[q].a1==0){
+                Gs[q].setA1(i);
+            }else {
+                Gs[q].setA2(i);
+            }
+        }
+    }
+
+    int[][] dp = new int[n+1][money+1];
+    for (int i = 1; i &lt;= n; i++) {
+        int v=0,v1=0,v2=0,v3=0,tempdp=0,tempdp1=0,tempdp2=0,tempdp3=0;
+
+        v = Gs[i].v;
+
+        tempdp = Gs[i].p*v; //只有主件
+
+        if(Gs[i].a1!=0){//主件加附件1
+            v1 = Gs[Gs[i].a1].v+v;
+            tempdp1 = tempdp + Gs[Gs[i].a1].v*Gs[Gs[i].a1].p;
+        }
+
+        if(Gs[i].a2!=0){//主件加附件2
+            v2 = Gs[Gs[i].a2].v+v;
+            tempdp2 = tempdp + Gs[Gs[i].a2].v*Gs[Gs[i].a2].p;
+        }
+
+        if(Gs[i].a1!=0&amp;&amp;Gs[i].a2!=0){//主件加附件1和附件2
+            v3 = Gs[Gs[i].a1].v+Gs[Gs[i].a2].v+v;
+            tempdp3 = tempdp + Gs[Gs[i].a1].v*Gs[Gs[i].a1].p + Gs[Gs[i].a2].v*Gs[Gs[i].a2].p;
+        }
+
+        for(int j=1; j&lt;=money; j++){
+            if(Gs[i].q &gt; 0) {   //当物品i是附件时,相当于跳过
+                dp[i][j] = dp[i-1][j];
+            } else {
+                dp[i][j] = dp[i-1][j];
+                if(j&gt;=v&amp;&amp;v!=0) dp[i][j] = Math.max(dp[i][j],dp[i-1][j-v]+tempdp);
+                if(j&gt;=v1&amp;&amp;v1!=0) dp[i][j] = Math.max(dp[i][j],dp[i-1][j-v1]+tempdp1);
+                if(j&gt;=v2&amp;&amp;v2!=0) dp[i][j] = Math.max(dp[i][j],dp[i-1][j-v2]+tempdp2);
+                if(j&gt;=v3&amp;&amp;v3!=0) dp[i][j] = Math.max(dp[i][j],dp[i-1][j-v3]+tempdp3);
+            }
+        }
+    }
+    System.out.println(dp[n][money]);
+
+
+}
+
+
+/**
+ * 定义物品类
+ */
+private static class good{
+    public int v;  //物品的价格
+    public int p;  //物品的重要度
+    public int q;  //物品的主附件ID
+
+    public int a1=0;   //附件1ID
+    public int a2=0;   //附件2ID
+
+    public good(int v, int p, int q) {
+        this.v = v;
+        this.p = p;
+        this.q = q;
+    }
+
+    public void setA1(int a1) {
+        this.a1 = a1;
+    }
+
+    public void setA2(int a2) {
+        this.a2 = a2;
+    }
+}
+</code></pre>
+<p>}</p>
 
               </div>
               <div class="toc-container">
@@ -102,9 +194,9 @@
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://cc1024201.github.io/post/about/">
+            <a href="https://cc1024201.github.io/post/zi-fu-chuan-pai-xu/">
               <h3 class="post-title">
-                Hello World
+                字符串排序
               </h3>
             </a>
           </div>

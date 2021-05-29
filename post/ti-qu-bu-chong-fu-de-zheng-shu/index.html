@@ -2,17 +2,19 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>阿里云 Spring Boot 脚手架 | zhcao.blog</title>
+<title>提取不重复的整数 | zhcao.blog</title>
 <link rel="shortcut icon" href="https://cc1024201.github.io/favicon.ico?v=1622256587260">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cc1024201.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="阿里云 Spring Boot 脚手架 | zhcao.blog - Atom Feed" href="https://cc1024201.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="提取不重复的整数 | zhcao.blog - Atom Feed" href="https://cc1024201.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="https://start.aliyun.com/
-" />
+    <meta name="description" content="import java.util.Scanner;
+public class Main {
+public static void main(String[] args) {
+Scanner sc = new Scanner(System.i..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -75,11 +77,11 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              阿里云 Spring Boot 脚手架
+              提取不重复的整数
             </h2>
             <div class="post-info">
               <span>
-                2021-05-26
+                2021-05-27
               </span>
               <span>
                 1 min read
@@ -89,7 +91,21 @@
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>https://start.aliyun.com/</p>
+                <p>import java.util.Scanner;</p>
+<p>public class Main {<br>
+public static void main(String[] args) {<br>
+Scanner sc = new Scanner(System.in);<br>
+int num = sc.nextInt();<br>
+char[] chars = String.valueOf(num).toCharArray();<br>
+String str = &quot;&quot;;<br>
+for (int i=chars.length-1; i&gt;=0; i--) {<br>
+if (!str.contains(chars[i] + &quot;&quot;)) {<br>
+str += chars[i];<br>
+}<br>
+}<br>
+System.out.println(Integer.valueOf(str));<br>
+}<br>
+}</p>
 
               </div>
               <div class="toc-container">
@@ -102,9 +118,9 @@
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://cc1024201.github.io/post/about/">
+            <a href="https://cc1024201.github.io/post/he-bing-biao-ji-lu/">
               <h3 class="post-title">
-                Hello World
+                合并表记录
               </h3>
             </a>
           </div>
