@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cc1024201.github.io</id>
     <title>zhcao.blog</title>
-    <updated>2021-05-29T02:50:05.741Z</updated>
+    <updated>2021-05-29T03:42:48.815Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cc1024201.github.io"/>
     <link rel="self" href="https://cc1024201.github.io/atom.xml"/>
@@ -10,6 +10,50 @@
     <logo>https://cc1024201.github.io/images/avatar.png</logo>
     <icon>https://cc1024201.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, zhcao.blog</rights>
+    <entry>
+        <title type="html"><![CDATA[简单密码]]></title>
+        <id>https://cc1024201.github.io/post/jian-dan-mi-ma/</id>
+        <link href="https://cc1024201.github.io/post/jian-dan-mi-ma/">
+        </link>
+        <updated>2021-05-29T02:54:57.000Z</updated>
+        <content type="html"><![CDATA[<p>import java.util.*;</p>
+<p>public class Main{<br>
+public static void main(String[] args){<br>
+Scanner sc = new Scanner(System.in);<br>
+while(sc.hasNext()){<br>
+String str = sc.nextLine();<br>
+char[] ch = str.toCharArray();<br>
+for(int i=0; i&lt;ch.length; i++){<br>
+if(ch[i]&gt;='a' &amp;&amp; ch[i]&lt;='c'){<br>
+System.out.print(2);<br>
+}else if(ch[i]&gt;='d' &amp;&amp; ch[i]&lt;='f'){<br>
+System.out.print(3);<br>
+}else if(ch[i]&gt;='g' &amp;&amp; ch[i]&lt;='i'){<br>
+System.out.print(4);<br>
+}else if(ch[i]&gt;='j' &amp;&amp; ch[i]&lt;='l'){<br>
+System.out.print(5);<br>
+}else if(ch[i]&gt;='m' &amp;&amp; ch[i]&lt;='o'){<br>
+System.out.print(6);<br>
+}else if(ch[i]&gt;='p' &amp;&amp; ch[i]&lt;='s'){<br>
+System.out.print(7);<br>
+}else if(ch[i]&gt;='t' &amp;&amp; ch[i]&lt;='v'){<br>
+System.out.print(8);<br>
+}else if(ch[i]&gt;='w' &amp;&amp; ch[i]&lt;='z'){<br>
+System.out.print(9);<br>
+}else if(ch[i]&gt;='A' &amp;&amp; ch[i]&lt;='Y'){<br>
+System.out.print((char)(ch[i]+33));<br>
+}else if(ch[i]=='Z'){<br>
+System.out.print('a');<br>
+}else if(ch[i]&gt;='0' &amp;&amp; ch[i]&lt;='9'){<br>
+System.out.print(ch[i]);<br>
+}<br>
+}<br>
+System.out.print(&quot;\n&quot;);<br>
+}<br>
+}<br>
+}</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[购物单]]></title>
         <id>https://cc1024201.github.io/post/gou-wu-dan/</id>
@@ -289,21 +333,6 @@ System.out.println(Integer.decode(str));<br>
         </link>
         <updated>2021-05-26T15:23:31.000Z</updated>
         <content type="html"><![CDATA[<p>https://start.aliyun.com/</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Hello World]]></title>
-        <id>https://cc1024201.github.io/post/about/</id>
-        <link href="https://cc1024201.github.io/post/about/">
-        </link>
-        <updated>2019-01-25T11:09:48.000Z</updated>
-        <content type="html"><![CDATA[<blockquote>
-<p>欢迎来到我的小站呀，很高兴遇见你！🤝</p>
-</blockquote>
-<h2 id="关于本站">🏠 关于本站</h2>
-<h2 id="博主是谁">👨‍💻 博主是谁</h2>
-<h2 id="兴趣爱好">⛹ 兴趣爱好</h2>
-<h2 id="联系我呀">📬 联系我呀</h2>
 ]]></content>
     </entry>
 </feed>

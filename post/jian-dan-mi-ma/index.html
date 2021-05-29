@@ -2,20 +2,20 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>字符串排序 | zhcao.blog</title>
+<title>简单密码 | zhcao.blog</title>
 <link rel="shortcut icon" href="https://cc1024201.github.io/favicon.ico?v=1622256904457">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cc1024201.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="字符串排序 | zhcao.blog - Atom Feed" href="https://cc1024201.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="简单密码 | zhcao.blog - Atom Feed" href="https://cc1024201.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="import java.util.Arrays;
-import java.util.Scanner;
-public class Main {
-public static void main(String[] args) {
-Scanner ..." />
+    <meta name="description" content="import java.util.*;
+public class Main{
+public static void main(String[] args){
+Scanner sc = new Scanner(System.in);
+whil..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -78,36 +78,53 @@ Scanner ..." />
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              字符串排序
+              简单密码
             </h2>
             <div class="post-info">
               <span>
-                2021-05-28
+                2021-05-29
               </span>
               <span>
-                1 min read
+                2 min read
               </span>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>import java.util.Arrays;<br>
-import java.util.Scanner;</p>
-<p>public class Main {<br>
-public static void main(String[] args) {<br>
+                <p>import java.util.*;</p>
+<p>public class Main{<br>
+public static void main(String[] args){<br>
 Scanner sc = new Scanner(System.in);<br>
-while (sc.hasNext()) {<br>
-int n = sc.nextInt();<br>
-String[] arr = new String[n];<br>
-for (int i = 0; i &lt; n; i++) {<br>
-String str = sc.next();<br>
-arr[i] = str;<br>
+while(sc.hasNext()){<br>
+String str = sc.nextLine();<br>
+char[] ch = str.toCharArray();<br>
+for(int i=0; i&lt;ch.length; i++){<br>
+if(ch[i]&gt;='a' &amp;&amp; ch[i]&lt;='c'){<br>
+System.out.print(2);<br>
+}else if(ch[i]&gt;='d' &amp;&amp; ch[i]&lt;='f'){<br>
+System.out.print(3);<br>
+}else if(ch[i]&gt;='g' &amp;&amp; ch[i]&lt;='i'){<br>
+System.out.print(4);<br>
+}else if(ch[i]&gt;='j' &amp;&amp; ch[i]&lt;='l'){<br>
+System.out.print(5);<br>
+}else if(ch[i]&gt;='m' &amp;&amp; ch[i]&lt;='o'){<br>
+System.out.print(6);<br>
+}else if(ch[i]&gt;='p' &amp;&amp; ch[i]&lt;='s'){<br>
+System.out.print(7);<br>
+}else if(ch[i]&gt;='t' &amp;&amp; ch[i]&lt;='v'){<br>
+System.out.print(8);<br>
+}else if(ch[i]&gt;='w' &amp;&amp; ch[i]&lt;='z'){<br>
+System.out.print(9);<br>
+}else if(ch[i]&gt;='A' &amp;&amp; ch[i]&lt;='Y'){<br>
+System.out.print((char)(ch[i]+33));<br>
+}else if(ch[i]=='Z'){<br>
+System.out.print('a');<br>
+}else if(ch[i]&gt;='0' &amp;&amp; ch[i]&lt;='9'){<br>
+System.out.print(ch[i]);<br>
 }<br>
-Arrays.sort(arr);<br>
-for (String a : arr) {<br>
-System.out.println(a);<br>
 }<br>
+System.out.print(&quot;\n&quot;);<br>
 }<br>
 }<br>
 }</p>
@@ -123,9 +140,9 @@ System.out.println(a);<br>
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://cc1024201.github.io/post/zi-fu-ge-shu-tong-ji/">
+            <a href="https://cc1024201.github.io/post/gou-wu-dan/">
               <h3 class="post-title">
-                字符个数统计
+                购物单
               </h3>
             </a>
           </div>
