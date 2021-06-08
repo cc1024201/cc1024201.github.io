@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cc1024201.github.io</id>
     <title>zhcao.blog</title>
-    <updated>2021-05-29T04:07:21.583Z</updated>
+    <updated>2021-06-08T13:38:07.591Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cc1024201.github.io"/>
     <link rel="self" href="https://cc1024201.github.io/atom.xml"/>
@@ -11,319 +11,102 @@
     <icon>https://cc1024201.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, zhcao.blog</rights>
     <entry>
-        <title type="html"><![CDATA[简单密码]]></title>
-        <id>https://cc1024201.github.io/post/jian-dan-mi-ma/</id>
-        <link href="https://cc1024201.github.io/post/jian-dan-mi-ma/">
+        <title type="html"><![CDATA[反转链表]]></title>
+        <id>https://cc1024201.github.io/post/fan-zhuan-lian-biao/</id>
+        <link href="https://cc1024201.github.io/post/fan-zhuan-lian-biao/">
         </link>
-        <updated>2021-05-29T02:54:57.000Z</updated>
-        <content type="html"><![CDATA[<p>import java.util.*;</p>
-<p>public class Main{<br>
-public static void main(String[] args){<br>
-Scanner sc = new Scanner(System.in);<br>
-while(sc.hasNext()){<br>
-String str = sc.nextLine();<br>
-char[] ch = str.toCharArray();<br>
-for(int i=0; i&lt;ch.length; i++){<br>
-if(ch[i]&gt;='a' &amp;&amp; ch[i]&lt;='c'){<br>
-System.out.print(2);<br>
-}else if(ch[i]&gt;='d' &amp;&amp; ch[i]&lt;='f'){<br>
-System.out.print(3);<br>
-}else if(ch[i]&gt;='g' &amp;&amp; ch[i]&lt;='i'){<br>
-System.out.print(4);<br>
-}else if(ch[i]&gt;='j' &amp;&amp; ch[i]&lt;='l'){<br>
-System.out.print(5);<br>
-}else if(ch[i]&gt;='m' &amp;&amp; ch[i]&lt;='o'){<br>
-System.out.print(6);<br>
-}else if(ch[i]&gt;='p' &amp;&amp; ch[i]&lt;='s'){<br>
-System.out.print(7);<br>
-}else if(ch[i]&gt;='t' &amp;&amp; ch[i]&lt;='v'){<br>
-System.out.print(8);<br>
-}else if(ch[i]&gt;='w' &amp;&amp; ch[i]&lt;='z'){<br>
-System.out.print(9);<br>
-}else if(ch[i]&gt;='A' &amp;&amp; ch[i]&lt;='Y'){<br>
-System.out.print((char)(ch[i]+33));<br>
-}else if(ch[i]=='Z'){<br>
-System.out.print('a');<br>
-}else if(ch[i]&gt;='0' &amp;&amp; ch[i]&lt;='9'){<br>
-System.out.print(ch[i]);<br>
-}<br>
-}<br>
-System.out.print(&quot;\n&quot;);<br>
-}<br>
-}<br>
-}</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[购物单]]></title>
-        <id>https://cc1024201.github.io/post/gou-wu-dan/</id>
-        <link href="https://cc1024201.github.io/post/gou-wu-dan/">
-        </link>
-        <updated>2021-05-29T02:49:35.000Z</updated>
-        <content type="html"><![CDATA[<p>import java.util.Scanner;</p>
-<p>public class Main {<br>
-public static void main(String[] args) {<br>
-Scanner sc = new Scanner(System.in);<br>
-int money = sc.nextInt();<br>
-int n = sc.nextInt();<br>
-if(n&lt;=0||money&lt;=0) System.out.println(0);</p>
-<pre><code>    good[] Gs = new good[n+1];
-    for (int i = 1; i &lt;= n; i++) {
-        int v = sc.nextInt();
-        int p = sc.nextInt();
-        int q = sc.nextInt();
-        Gs[i] = new good(v,p,q);
+        <updated>2021-06-08T13:13:50.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="描述">描述</h1>
+<p>输入一个链表，反转链表后，输出链表的表头</p>
+<h1 id="示例1">示例1</h1>
+<blockquote>
+<p>输入：{1，2，3}<br>
+返回值：{3，2，1}</p>
+</blockquote>
+<h2 id="方法一构造链表">方法一：构造链表</h2>
+<p>可以先用一个按照插入顺序排序的集合将单链表每个节点都存起来，然后再构造链表<br>
+此方法简单易懂</p>
+<pre><code class="language-java">/*
+public class ListNode {
+    int val;
+    ListNode next = null;
 
-        if(q&gt;0){
-            if(Gs[q].a1==0){
-                Gs[q].setA1(i);
-            }else {
-                Gs[q].setA2(i);
-            }
-        }
+    ListNode(int val) {
+        this.val = val;
     }
+}*/
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-    int[][] dp = new int[n+1][money+1];
-    for (int i = 1; i &lt;= n; i++) {
-        int v=0,v1=0,v2=0,v3=0,tempdp=0,tempdp1=0,tempdp2=0,tempdp3=0;
-
-        v = Gs[i].v;
-
-        tempdp = Gs[i].p*v; //只有主件
-
-        if(Gs[i].a1!=0){//主件加附件1
-            v1 = Gs[Gs[i].a1].v+v;
-            tempdp1 = tempdp + Gs[Gs[i].a1].v*Gs[Gs[i].a1].p;
+public class Solution {
+    public ListNode ReverseList(ListNode head) {
+        if (null == head) {
+            return null;
         }
-
-        if(Gs[i].a2!=0){//主件加附件2
-            v2 = Gs[Gs[i].a2].v+v;
-            tempdp2 = tempdp + Gs[Gs[i].a2].v*Gs[Gs[i].a2].p;
+        List&lt;ListNode&gt; list = new ArrayList&lt;&gt;();
+        while (head != null) {
+            list.add(head);
+            head = head.next;
         }
-
-        if(Gs[i].a1!=0&amp;&amp;Gs[i].a2!=0){//主件加附件1和附件2
-            v3 = Gs[Gs[i].a1].v+Gs[Gs[i].a2].v+v;
-            tempdp3 = tempdp + Gs[Gs[i].a1].v*Gs[Gs[i].a1].p + Gs[Gs[i].a2].v*Gs[Gs[i].a2].p;
+        Collections.reverse(list);
+        for (ListNode node : list) {
+            node.next = null;
         }
-
-        for(int j=1; j&lt;=money; j++){
-            if(Gs[i].q &gt; 0) {   //当物品i是附件时,相当于跳过
-                dp[i][j] = dp[i-1][j];
-            } else {
-                dp[i][j] = dp[i-1][j];
-                if(j&gt;=v&amp;&amp;v!=0) dp[i][j] = Math.max(dp[i][j],dp[i-1][j-v]+tempdp);
-                if(j&gt;=v1&amp;&amp;v1!=0) dp[i][j] = Math.max(dp[i][j],dp[i-1][j-v1]+tempdp1);
-                if(j&gt;=v2&amp;&amp;v2!=0) dp[i][j] = Math.max(dp[i][j],dp[i-1][j-v2]+tempdp2);
-                if(j&gt;=v3&amp;&amp;v3!=0) dp[i][j] = Math.max(dp[i][j],dp[i-1][j-v3]+tempdp3);
-            }
+        head = list.get(0);
+        list.remove(0);
+        ListNode currentNode = head;
+        while (list.size() &gt; 0) {
+            currentNode.next = list.get(0);
+            list.remove(0);
+            currentNode = currentNode.next;
         }
-    }
-    System.out.println(dp[n][money]);
-
-
-}
-
-
-/**
- * 定义物品类
- */
-private static class good{
-    public int v;  //物品的价格
-    public int p;  //物品的重要度
-    public int q;  //物品的主附件ID
-
-    public int a1=0;   //附件1ID
-    public int a2=0;   //附件2ID
-
-    public good(int v, int p, int q) {
-        this.v = v;
-        this.p = p;
-        this.q = q;
-    }
-
-    public void setA1(int a1) {
-        this.a1 = a1;
-    }
-
-    public void setA2(int a2) {
-        this.a2 = a2;
+        return head;
     }
 }
 </code></pre>
-<p>}</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[字符串排序]]></title>
-        <id>https://cc1024201.github.io/post/zi-fu-chuan-pai-xu/</id>
-        <link href="https://cc1024201.github.io/post/zi-fu-chuan-pai-xu/">
-        </link>
-        <updated>2021-05-27T16:06:33.000Z</updated>
-        <content type="html"><![CDATA[<p>import java.util.Arrays;<br>
-import java.util.Scanner;</p>
-<p>public class Main {<br>
-public static void main(String[] args) {<br>
-Scanner sc = new Scanner(System.in);<br>
-while (sc.hasNext()) {<br>
-int n = sc.nextInt();<br>
-String[] arr = new String[n];<br>
-for (int i = 0; i &lt; n; i++) {<br>
-String str = sc.next();<br>
-arr[i] = str;<br>
-}<br>
-Arrays.sort(arr);<br>
-for (String a : arr) {<br>
-System.out.println(a);<br>
-}<br>
-}<br>
-}<br>
-}</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[字符个数统计]]></title>
-        <id>https://cc1024201.github.io/post/zi-fu-ge-shu-tong-ji/</id>
-        <link href="https://cc1024201.github.io/post/zi-fu-ge-shu-tong-ji/">
-        </link>
-        <updated>2021-05-27T15:56:25.000Z</updated>
-        <content type="html"><![CDATA[<p>import java.util.BitSet;<br>
-import java.util.Scanner;</p>
-<p>public class Main {<br>
-public static void main(String[] args) {<br>
-Scanner sc = new Scanner(System.in);<br>
-String line = sc.nextLine();<br>
-BitSet bitSet = new BitSet(128);<br>
-for (char c : line.toCharArray()) {<br>
-if (!bitSet.get(c)) {<br>
-bitSet.set(c);<br>
-}<br>
-}<br>
-System.out.println(bitSet.cardinality());<br>
-}<br>
-}</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[提取不重复的整数]]></title>
-        <id>https://cc1024201.github.io/post/ti-qu-bu-chong-fu-de-zheng-shu/</id>
-        <link href="https://cc1024201.github.io/post/ti-qu-bu-chong-fu-de-zheng-shu/">
-        </link>
-        <updated>2021-05-27T15:52:04.000Z</updated>
-        <content type="html"><![CDATA[<p>import java.util.Scanner;</p>
-<p>public class Main {<br>
-public static void main(String[] args) {<br>
-Scanner sc = new Scanner(System.in);<br>
-int num = sc.nextInt();<br>
-char[] chars = String.valueOf(num).toCharArray();<br>
-String str = &quot;&quot;;<br>
-for (int i=chars.length-1; i&gt;=0; i--) {<br>
-if (!str.contains(chars[i] + &quot;&quot;)) {<br>
-str += chars[i];<br>
-}<br>
-}<br>
-System.out.println(Integer.valueOf(str));<br>
-}<br>
-}</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[合并表记录]]></title>
-        <id>https://cc1024201.github.io/post/he-bing-biao-ji-lu/</id>
-        <link href="https://cc1024201.github.io/post/he-bing-biao-ji-lu/">
-        </link>
-        <updated>2021-05-27T15:45:52.000Z</updated>
-        <content type="html"><![CDATA[<p>import java.util.Map;<br>
-import java.util.Scanner;<br>
-import java.util.TreeMap;</p>
-<p>public class Main {<br>
-public static void main(String[] args) {<br>
-Scanner sc = new Scanner(System.in);<br>
-while (sc.hasNext()) {<br>
-int next = sc.nextInt();<br>
-Map&lt;Integer, Integer&gt; map = new TreeMap&lt;&gt;();<br>
-for (int i = 0; i &lt; next; i++) {<br>
-int key = sc.nextInt();<br>
-int value = sc.nextInt();<br>
-if (map.containsKey(key)) {<br>
-map.put(key, map.get(key) + value);<br>
-} else {<br>
-map.put(key, value);<br>
-}<br>
-}<br>
-for (Map.Entry&lt;Integer, Integer&gt; integerEntry : map.entrySet()) {<br>
-System.out.println(integerEntry.getKey() + &quot; &quot; + integerEntry.getValue());<br>
-}<br>
-}<br>
-}<br>
-}</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[质数因子]]></title>
-        <id>https://cc1024201.github.io/post/zhi-shu-yin-zi/</id>
-        <link href="https://cc1024201.github.io/post/zhi-shu-yin-zi/">
-        </link>
-        <updated>2021-05-27T15:37:58.000Z</updated>
-        <content type="html"><![CDATA[<p>import java.util.Scanner;</p>
-<p>public class Main {<br>
-public static void main(String[] args) {<br>
-Scanner sc = new Scanner(System.in);<br>
-long num = sc.nextLong();<br>
-long k = (long) Math.sqrt(num);<br>
-for (long i = 2; i &lt;= k; i++) {<br>
-while (num % i == 0) {<br>
-System.out.print(i + &quot; &quot;);<br>
-num /= i;<br>
-}<br>
-}<br>
-System.out.println(num == 1 ? &quot;&quot; : num + &quot; &quot;);<br>
-}<br>
-}</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[求解立方根]]></title>
-        <id>https://cc1024201.github.io/post/qiu-jie-li-fang-gen/</id>
-        <link href="https://cc1024201.github.io/post/qiu-jie-li-fang-gen/">
-        </link>
-        <updated>2021-05-27T15:26:26.000Z</updated>
-        <content type="html"><![CDATA[<p>import java.util.Scanner;<br>
-public class Main{<br>
-public static void main(String[] args){<br>
-Scanner sc = new Scanner(System.in);<br>
-while(sc.hasNext()){<br>
-double input = sc.nextDouble();<br>
-System.out.printf(&quot;%.1f&quot;, getCube(input));<br>
-}<br>
-}<br>
-private static double getCube(double input){<br>
-double x=1;<br>
-double x1 = x - (x<em>x</em>x - input) / (3<em>x</em>x);<br>
-while(x - x1 &gt; 0.00001 || x - x1 &lt; -0.00001){<br>
-x = x1;<br>
-x1 = x - (x<em>x</em>x - input) / (3<em>x</em>x);<br>
-}<br>
-return x1;<br>
-}<br>
-}</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[进制转换]]></title>
-        <id>https://cc1024201.github.io/post/jin-zhi-zhuan-huan/</id>
-        <link href="https://cc1024201.github.io/post/jin-zhi-zhuan-huan/">
-        </link>
-        <updated>2021-05-27T15:25:43.000Z</updated>
-        <content type="html"><![CDATA[<p>import java.util.Scanner;<br>
-public class Main {<br>
-public static void main(String[] args) throws Exception{<br>
-Scanner sc=new Scanner(System.in);<br>
-while (sc.hasNext()){<br>
-String str=sc.next();<br>
-System.out.println(Integer.decode(str));<br>
-}<br>
-}<br>
-}</p>
+<h2 id="方法二正规解法">方法二：正规解法</h2>
+<p>此题想考察的的是：如何调整链表指针，来达到反转链表的目的。</p>
+<ol>
+<li>初始化：3个指针
+<ul>
+<li>pre指向已经反转好的链表的最后一个节点，最开始没有反转，所以为null</li>
+<li>cur指向待反转链表的第一个节点，最开始第一个节点待反转，所以为head</li>
+<li>nex指向待反转链表的第二个节点，目的是保存链表，因为cur改变指向后，后面的链表会失效，所以需要保存</li>
+</ul>
+</li>
+<li>循环执行以下三个操作
+<ul>
+<li>nex = cur.next, 保存作用</li>
+<li>cur.next = pre，没有反转的链表的第一个节点的下个节点是已反转链表的最后一个节点（在此完成反转）</li>
+<li>pre = cur, cur = nex; 指针后移， 操作下一个未反转链表的第一个节点</li>
+</ul>
+</li>
+</ol>
+<pre><code class="language-java">/*
+public class ListNode {
+  int val;
+  ListNode next = null;
+
+  ListNode(int val) {
+      this.val = val;
+  }
+}*/
+public class Solution {
+  public ListNode ReverseList(ListNode head) {
+      ListNode pre = null;
+      ListNode cur = head;
+      ListNode nex = null;
+      while (null != cur) {
+          nex = cur.next; //记录当前节点的下一个节点位置
+          cur.next = pre; //让当前节点指向前一个节点位置，完成反转
+          pre = cur; //pre往右走
+          cur = nex; //当前节点往右走
+      }
+      return pre;
+  }
+}
+</code></pre>
 ]]></content>
     </entry>
     <entry>
@@ -333,6 +116,21 @@ System.out.println(Integer.decode(str));<br>
         </link>
         <updated>2021-05-26T15:23:31.000Z</updated>
         <content type="html"><![CDATA[<p>https://start.aliyun.com/</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Hello World]]></title>
+        <id>https://cc1024201.github.io/post/about/</id>
+        <link href="https://cc1024201.github.io/post/about/">
+        </link>
+        <updated>2019-01-25T11:09:48.000Z</updated>
+        <content type="html"><![CDATA[<blockquote>
+<p>欢迎来到我的小站呀，很高兴遇见你！🤝</p>
+</blockquote>
+<h2 id="关于本站">🏠 关于本站</h2>
+<h2 id="博主是谁">👨‍💻 博主是谁</h2>
+<h2 id="兴趣爱好">⛹ 兴趣爱好</h2>
+<h2 id="联系我呀">📬 联系我呀</h2>
 ]]></content>
     </entry>
 </feed>

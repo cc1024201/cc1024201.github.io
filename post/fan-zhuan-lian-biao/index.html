@@ -1,0 +1,275 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>反转链表 | zhcao.blog</title>
+<link rel="shortcut icon" href="https://cc1024201.github.io/favicon.ico?v=1623159477384">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cc1024201.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="反转链表 | zhcao.blog - Atom Feed" href="https://cc1024201.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="描述
+输入一个链表，反转链表后，输出链表的表头
+示例1
+
+输入：{1，2，3}
+返回值：{3，2，1}
+
+方法一：构造链表
+可以先用一个按照插入顺序排序的集合将单链表每个节点都存起来，然后再构造链表
+此方法简单易懂
+/*
+public cl..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://cc1024201.github.io">
+  <img class="avatar" src="https://cc1024201.github.io/images/avatar.png?v=1623159477384" alt="">
+  </a>
+  <h1 class="site-title">
+    zhcao.blog
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              反转链表
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-06-08
+              </span>
+              <span>
+                3 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h1 id="描述">描述</h1>
+<p>输入一个链表，反转链表后，输出链表的表头</p>
+<h1 id="示例1">示例1</h1>
+<blockquote>
+<p>输入：{1，2，3}<br>
+返回值：{3，2，1}</p>
+</blockquote>
+<h2 id="方法一构造链表">方法一：构造链表</h2>
+<p>可以先用一个按照插入顺序排序的集合将单链表每个节点都存起来，然后再构造链表<br>
+此方法简单易懂</p>
+<pre><code class="language-java">/*
+public class ListNode {
+    int val;
+    ListNode next = null;
+
+    ListNode(int val) {
+        this.val = val;
+    }
+}*/
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class Solution {
+    public ListNode ReverseList(ListNode head) {
+        if (null == head) {
+            return null;
+        }
+        List&lt;ListNode&gt; list = new ArrayList&lt;&gt;();
+        while (head != null) {
+            list.add(head);
+            head = head.next;
+        }
+        Collections.reverse(list);
+        for (ListNode node : list) {
+            node.next = null;
+        }
+        head = list.get(0);
+        list.remove(0);
+        ListNode currentNode = head;
+        while (list.size() &gt; 0) {
+            currentNode.next = list.get(0);
+            list.remove(0);
+            currentNode = currentNode.next;
+        }
+        return head;
+    }
+}
+</code></pre>
+<h2 id="方法二正规解法">方法二：正规解法</h2>
+<p>此题想考察的的是：如何调整链表指针，来达到反转链表的目的。</p>
+<ol>
+<li>初始化：3个指针
+<ul>
+<li>pre指向已经反转好的链表的最后一个节点，最开始没有反转，所以为null</li>
+<li>cur指向待反转链表的第一个节点，最开始第一个节点待反转，所以为head</li>
+<li>nex指向待反转链表的第二个节点，目的是保存链表，因为cur改变指向后，后面的链表会失效，所以需要保存</li>
+</ul>
+</li>
+<li>循环执行以下三个操作
+<ul>
+<li>nex = cur.next, 保存作用</li>
+<li>cur.next = pre，没有反转的链表的第一个节点的下个节点是已反转链表的最后一个节点（在此完成反转）</li>
+<li>pre = cur, cur = nex; 指针后移， 操作下一个未反转链表的第一个节点</li>
+</ul>
+</li>
+</ol>
+<pre><code class="language-java">/*
+public class ListNode {
+  int val;
+  ListNode next = null;
+
+  ListNode(int val) {
+      this.val = val;
+  }
+}*/
+public class Solution {
+  public ListNode ReverseList(ListNode head) {
+      ListNode pre = null;
+      ListNode cur = head;
+      ListNode nex = null;
+      while (null != cur) {
+          nex = cur.next; //记录当前节点的下一个节点位置
+          cur.next = pre; //让当前节点指向前一个节点位置，完成反转
+          pre = cur; //pre往右走
+          cur = nex; //当前节点往右走
+      }
+      return pre;
+  }
+}
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#%E6%8F%8F%E8%BF%B0">描述</a></li>
+<li><a href="#%E7%A4%BA%E4%BE%8B1">示例1</a>
+<ul>
+<li><a href="#%E6%96%B9%E6%B3%95%E4%B8%80%E6%9E%84%E9%80%A0%E9%93%BE%E8%A1%A8">方法一：构造链表</a></li>
+<li><a href="#%E6%96%B9%E6%B3%95%E4%BA%8C%E6%AD%A3%E8%A7%84%E8%A7%A3%E6%B3%95">方法二：正规解法</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://cc1024201.github.io/post/a-li-yun-spring-boot-jiao-shou-jia/">
+              <h3 class="post-title">
+                阿里云 Spring Boot 脚手架
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://https://cc1024201.github.io/" target="_blank">zhcao</a>
+  <a class="rss" href="https://cc1024201.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
