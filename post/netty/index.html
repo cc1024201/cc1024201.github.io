@@ -2,27 +2,21 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>反转链表 | zhcao.blog</title>
+<title>Netty | zhcao.blog</title>
 <link rel="shortcut icon" href="https://cc1024201.github.io/favicon.ico?v=1623250862736">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cc1024201.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="反转链表 | zhcao.blog - Atom Feed" href="https://cc1024201.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="Netty | zhcao.blog - Atom Feed" href="https://cc1024201.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="描述
-输入一个链表，反转链表后，输出链表的表头
-示例1
-
-输入：{1，2，3}
-返回值：{3，2，1}
-
-方法一：构造链表
-可以先用一个按照插入顺序排序的集合将单链表每个节点都存起来，然后再构造链表
-此方法简单易懂
-/*
-public cl..." />
+    <meta name="description" content="介绍
+Netty官网
+Netty 是一个异步的、基于事件驱动的网络应用框架，用以快速开发高性能、高可靠性的网络 IO 程序。
+Netty本质是一个NIO框架，适用于服务器通讯相关的多种应用场景。
+应用场景
+阿里分布式服务框架 Dubbo 的..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -85,11 +79,11 @@ public cl..." />
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              反转链表
+              Netty
             </h2>
             <div class="post-info">
               <span>
-                2021-06-08
+                2021-06-09
               </span>
               <span>
                 3 min read
@@ -99,108 +93,48 @@ public cl..." />
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <h1 id="描述">描述</h1>
-<p>输入一个链表，反转链表后，输出链表的表头</p>
-<h1 id="示例1">示例1</h1>
-<blockquote>
-<p>输入：{1，2，3}<br>
-返回值：{3，2，1}</p>
-</blockquote>
-<h2 id="方法一构造链表">方法一：构造链表</h2>
-<p>可以先用一个按照插入顺序排序的集合将单链表每个节点都存起来，然后再构造链表<br>
-此方法简单易懂</p>
-<pre><code class="language-java">/*
-public class ListNode {
-    int val;
-    ListNode next = null;
-
-    ListNode(int val) {
-        this.val = val;
-    }
-}*/
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-public class Solution {
-    public ListNode ReverseList(ListNode head) {
-        if (null == head) {
-            return null;
-        }
-        List&lt;ListNode&gt; list = new ArrayList&lt;&gt;();
-        while (head != null) {
-            list.add(head);
-            head = head.next;
-        }
-        Collections.reverse(list);
-        for (ListNode node : list) {
-            node.next = null;
-        }
-        head = list.get(0);
-        list.remove(0);
-        ListNode currentNode = head;
-        while (list.size() &gt; 0) {
-            currentNode.next = list.get(0);
-            list.remove(0);
-            currentNode = currentNode.next;
-        }
-        return head;
-    }
-}
-</code></pre>
-<h2 id="方法二正规解法">方法二：正规解法</h2>
-<p>此题想考察的的是：如何调整链表指针，来达到反转链表的目的。</p>
-<ol>
-<li>初始化：3个指针
-<ul>
-<li>pre指向已经反转好的链表的最后一个节点，最开始没有反转，所以为null</li>
-<li>cur指向待反转链表的第一个节点，最开始第一个节点待反转，所以为head</li>
-<li>nex指向待反转链表的第二个节点，目的是保存链表，因为cur改变指向后，后面的链表会失效，所以需要保存</li>
-</ul>
-</li>
-<li>循环执行以下三个操作
-<ul>
-<li>nex = cur.next, 保存作用</li>
-<li>cur.next = pre，没有反转的链表的第一个节点的下个节点是已反转链表的最后一个节点（在此完成反转）</li>
-<li>pre = cur, cur = nex; 指针后移， 操作下一个未反转链表的第一个节点</li>
-</ul>
-</li>
-</ol>
-<pre><code class="language-java">/*
-public class ListNode {
-  int val;
-  ListNode next = null;
-
-  ListNode(int val) {
-      this.val = val;
-  }
-}*/
-public class Solution {
-  public ListNode ReverseList(ListNode head) {
-      ListNode pre = null;
-      ListNode cur = head;
-      ListNode nex = null;
-      while (null != cur) {
-          nex = cur.next; //记录当前节点的下一个节点位置
-          cur.next = pre; //让当前节点指向前一个节点位置，完成反转
-          pre = cur; //pre往右走
-          cur = nex; //当前节点往右走
-      }
-      return pre;
-  }
-}
-</code></pre>
+                <h1 id="介绍">介绍</h1>
+<p><a href="https://netty.io/">Netty官网</a><br>
+Netty 是一个异步的、基于事件驱动的网络应用框架，用以快速开发高性能、高可靠性的网络 IO 程序。<br>
+Netty本质是一个NIO框架，适用于服务器通讯相关的多种应用场景。</p>
+<h1 id="应用场景">应用场景</h1>
+<p>阿里分布式服务框架 Dubbo 的 Dubbo 协议默认使用 Netty 作为基础通信组件，而其中的RPC调用就是netty+反射。<br>
+<img src="https://cc1024201.github.io/post-images/1623244755374.png" alt="" loading="lazy"><br>
+经典的 Hadoop 的高性能通信和序列化组件 Avro 的 RPC 框架，默认采用 Netty 进行跨界点通信<br>
+<img src="https://cc1024201.github.io/post-images/1623244804578.png" alt="" loading="lazy"></p>
+<h1 id="netty-优势">Netty 优势</h1>
+<h2 id="原生nio存在的问题">原生NIO存在的问题</h2>
+<p>NIO 的类库和 API 繁杂，使用麻烦：需要熟练掌握 Selector、ServerSocketChannel、SocketChannel、ByteBuffer 等。<br>
+需要具备其他的额外技能：要熟悉 Java 多线程编程，因为 NIO 编程涉及到 Reactor 模式，你必须对多线程和网络编程非常熟悉，才能编写出高质量的 NIO 程序。<br>
+开发工作量和难度都非常大：例如客户端面临断连重连、网络闪断、半包读写、失败缓存、网络拥塞和异常流的处理等等。<br>
+JDK NIO 的 Bug：例如Epoll Bug，它会导致 Selector 空轮询，最终导致 CPU 100%。</p>
+<h2 id="netty的优点">Netty的优点</h2>
+<p>Netty 对 JDK 自带的 NIO 的 API 进行了封装，解决了上述问题。<br>
+异步非阻塞通信<br>
+Reactor模型优化<br>
+高效的并发编程<br>
+无锁化的串行设计理念<br>
+基于内存池的缓冲区重用机制零拷贝<br>
+提供对protobuf等高性能序列化协议支持<br>
+设计优雅：适用于各种传输类型的统一 API 阻塞和非阻塞 Socket；基于灵活且可扩展的事件模型，可以清晰地分离关注点；高度可定制的线程模型 - 单线程，一个或多个线程池.<br>
+使用方便：详细记录的 Javadoc，用户指南和示例；没有其他依赖项，JDK 5（Netty 3.x）或 6（Netty 4.x）就足够了。<br>
+高性能、吞吐量更高：延迟更低；减少资源消耗；最小化不必要的内存复制。<br>
+安全：完整的 SSL/TLS 和 StartTLS 支持。<br>
+社区活跃、不断更新：发现的 Bug 可以被及时修复，同时，更多的新功能会被加入</p>
+<h1 id="netty线程模型">Netty线程模型</h1>
 
               </div>
               <div class="toc-container">
                 <ul class="markdownIt-TOC">
-<li><a href="#%E6%8F%8F%E8%BF%B0">描述</a></li>
-<li><a href="#%E7%A4%BA%E4%BE%8B1">示例1</a>
+<li><a href="#%E4%BB%8B%E7%BB%8D">介绍</a></li>
+<li><a href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF">应用场景</a></li>
+<li><a href="#netty-%E4%BC%98%E5%8A%BF">Netty 优势</a>
 <ul>
-<li><a href="#%E6%96%B9%E6%B3%95%E4%B8%80%E6%9E%84%E9%80%A0%E9%93%BE%E8%A1%A8">方法一：构造链表</a></li>
-<li><a href="#%E6%96%B9%E6%B3%95%E4%BA%8C%E6%AD%A3%E8%A7%84%E8%A7%A3%E6%B3%95">方法二：正规解法</a></li>
+<li><a href="#%E5%8E%9F%E7%94%9Fnio%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98">原生NIO存在的问题</a></li>
+<li><a href="#netty%E7%9A%84%E4%BC%98%E7%82%B9">Netty的优点</a></li>
 </ul>
 </li>
+<li><a href="#netty%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B">Netty线程模型</a></li>
 </ul>
 
               </div>
@@ -211,9 +145,9 @@ public class Solution {
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://cc1024201.github.io/post/a-li-yun-spring-boot-jiao-shou-jia/">
+            <a href="https://cc1024201.github.io/post/pai-xu/">
               <h3 class="post-title">
-                阿里云 Spring Boot 脚手架
+                排序
               </h3>
             </a>
           </div>
