@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cc1024201.github.io</id>
     <title>zhcao.blog</title>
-    <updated>2021-06-14T10:25:54.276Z</updated>
+    <updated>2021-06-14T13:57:49.676Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cc1024201.github.io"/>
     <link rel="self" href="https://cc1024201.github.io/atom.xml"/>
@@ -714,6 +714,54 @@ send：最后，通过套接字把结果发送出去。<br>
 <p>channel_map 保存了描述字到 channel 的映射，这样就可以在事件发生时，根据事件类型对应的套接字快速找到 chanel 对象里的事件处理函数。</p>
 <h3 id="io-模型和多线程模型设计">I/O 模型和多线程模型设计</h3>
 <p>I/O 线程和多线程模型，主要解决 event_loop 的线程运行问题，以及事件分发和回调的线程执行问题。</p>
+<h4 id="thread_pool">thread_pool</h4>
+<p>thread_pool 维护了一个 sub-reactor 的线程列表，它可以提供给主 reactor 线程使用，每次当有新的连接建立时，可以从 thread_pool 里获取一个线程，以便用它来完成对新连接套接字的 read/write 事件注册，将 I/O 线程和主 reactor 线程分离。</p>
+<h4 id="event_loop_thread">event_loop_thread</h4>
+<p>event_loop_thread 是 reactor 的线程实现，连接套接字的 read/write 事件检测都是在这个线程里完成的。</p>
+<h3 id="buffer-和数据读写">Buffer 和数据读写</h3>
+<h4 id="buffer">buffer</h4>
+<p>buffer 对象屏蔽了对套接字进行的写和读的操作，如果没有 buffer 对象，连接套接字的 read/write 事件都需要和字节流直接打交道，这显然是不友好的。所以，我们也提供了一个基本的 buffer 对象，用来表示从连接套接字收取的数据，以及应用程序即将需要发送出去的数据。</p>
+<h4 id="tcp_connection">tcp_connection</h4>
+<p>tcp_connection 这个对象描述的是已建立的 TCP 连接。它的属性包括接收缓冲区、发送缓冲区、channel 对象等。这些都是一个 TCP 连接的天然属性。</p>
+<p>tcp_connection 是大部分应用程序和我们的高性能框架直接打交道的数据结构。我们不想把最下层的 channel 对象暴露给应用程序，因为抽象的 channel 对象不仅仅可以表示 tcp_connection，前面提到的监听套接字也是一个 channel 对象，后面提到的唤醒 socketpair 也是一个 channel 对象。所以，我们设计了 tcp_connection 这个对象，希望可以提供给用户比较清晰的编程入口。</p>
+<h2 id="反应堆模式设计-2">反应堆模式设计</h2>
+<h3 id="概述">概述</h3>
+<p><img src="https://cc1024201.github.io/post-images/1623666724657.png" alt="" loading="lazy"><br>
+当 event_loop_run 完成之后，线程进入循环，首先执行 dispatch 事件分发，一旦有事件发生，就会调用 channel_event_activate 函数，在这个函数中完成事件回调函数 eventReadcallback 和 eventWritecallback 的调用，最后再进行 event_loop_handle_pending_channel，用来修改当前监听的事件列表，完成这个部分之后，又进入了事件分发循环。</p>
+<h3 id="event_loop-分析">event_loop 分析</h3>
+<p>说 event_loop 是整个反应堆模式设计的核心，一点也不为过。先看一下 event_loop 的数据结构。</p>
+<p>在这个数据结构中，最重要的莫过于 event_dispatcher 对象了。你可以简单地把 event_dispatcher 理解为 poll 或者 epoll，它可以让我们的线程挂起，等待事件的发生。</p>
+<h3 id="event_dispacher-分析">event_dispacher 分析</h3>
+<p>为了实现不同的事件分发机制，这里把 poll、epoll 等抽象成了一个 event_dispatcher 结构。event_dispatcher 的具体实现有 poll_dispatcher 和 epoll_dispatcher 两种</p>
+<h3 id="channel-对象分析">channel 对象分析</h3>
+<p>channel 对象是用来和 event_dispather 进行交互的最主要的结构体，它抽象了事件分发。一个 channel 对应一个描述字，描述字上可以有 READ 可读事件，也可以有 WRITE 可写事件。channel 对象绑定了事件处理函数 event_read_callback 和 event_write_callback。</p>
+<h3 id="channel_map-对象分析">channel_map 对象分析</h3>
+<p>event_dispatcher 在获得活动事件列表之后，需要通过文件描述字找到对应的 channel，从而回调 channel 上的事件处理函数 event_read_callback 和 event_write_callback，为此，设计了 channel_map 对象。</p>
+<h3 id="增加-删除-修改-channel-event">增加、删除、修改 channel event</h3>
+<h1 id="高性能http服务器二io模型和多线程模型实现">高性能HTTP服务器（二）：I/O模型和多线程模型实现</h1>
+<h2 id="多线程设计的几个考虑">多线程设计的几个考虑</h2>
+<p>在我们的设计中，main reactor 线程是一个 acceptor 线程，这个线程一旦创建，会以event_loop 形式阻塞在 event_dispatcher 的 dispatch 方法上，实际上，它在等待监听套接字上的事件发生，也就是已完成的连接，一旦有连接完成，就会创建出连接对象tcp_connection，以及 channel 对象等。</p>
+<p>当用户期望使用多个 sub-reactor 子线程时，主线程会创建多个子线程，每个子线程在创建之后，按照主线程指定的启动函数立即运行，并进行初始化。随之而来的问题是，主线程如何判断子线程已经完成初始化并启动，继续执行下去呢？这是一个需要解决的重点问题。<br>
+在设置了多个线程的情况下，需要将新创建的已连接套接字对应的读写事件交给一个 subreactor线程处理。所以，这里从 thread_pool 中取出一个线程，通知这个线程有新的事件加入。而这个线程很可能是处于事件分发的阻塞调用之中，如何协调主线程数据写入给子线程，这是另一个需要解决的重点问题。<br>
+<img src="https://cc1024201.github.io/post-images/1623678351324.png" alt="" loading="lazy"><br>
+<img src="https://cc1024201.github.io/post-images/1623678356236.png" alt="" loading="lazy"></p>
+<h2 id="主线程等待多个-sub-reactor-子线程初始化完">主线程等待多个 sub-reactor 子线程初始化完</h2>
+<p>主线程需要等待子线程完成初始化，也就是需要获取子线程对应数据的反馈，而子线程初始<br>
+化也是对这部分数据进行初始化，实际上这是一个多线程的通知问题。</p>
+<h2 id="增加已连接套接字事件到-sub-reactor-线程中">增加已连接套接字事件到 sub-reactor 线程中</h2>
+<h1 id="高性能http服务器三tcp字节流处理和http协议实现">高性能HTTP服务器（三）：TCP字节流处理和HTTP协议实现</h1>
+<h2 id="buffer-对象">buffer 对象</h2>
+<p>buffer，顾名思义，就是一个缓冲区对象，缓存了从套接字接收来的数据以及需要发往套接字的数据。<br>
+如果是从套接字接收来的数据，事件处理回调函数在不断地往 buffer 对象增加数据，同时，应用程序需要不断把 buffer 对象中的数据处理掉，这样，buffer 对象才可以空出新的位置容纳更多的数据。<br>
+如果是发往套接字的数据，应用程序不断地往 buffer 对象增加数据，同时，事件处理回调函数不断调用套接字上的发送函数将数据发送出去，减少 buffer 对象中的写入数据。<br>
+可见，buffer 对象是同时可以作为输入缓冲（input buffer）和输出缓冲（output buffer）两个方向使用的，只不过，在两种情形下，写入和读出的对象是有区别的。<br>
+<img src="https://cc1024201.github.io/post-images/1623678630460.png" alt="" loading="lazy"></p>
+<h2 id="套接字接收数据处理">套接字接收数据处理</h2>
+<h2 id="套接字发送数据处理">套接字发送数据处理</h2>
+<h2 id="http-协议实现">HTTP 协议实现</h2>
+<p>首先定义了一个 http_server 结构，这个 http_server 本质上就是一个TCPServer，只不过暴露给应用程序的回调函数更为简单，只需要看到 http_request 和http_response 结构。</p>
+<p>在 http_server 里面，重点是需要完成报文的解析，将解析的报文转化为 http_request 对象，这件事情是通过 http_onMessage 回调函数来完成的。在 http_onMessage 函数里，调用的是 parse_http_request 完成报文解析。</p>
+<h2 id="完整的-http-服务器例子">完整的 HTTP 服务器例子</h2>
 ]]></content>
     </entry>
     <entry>
