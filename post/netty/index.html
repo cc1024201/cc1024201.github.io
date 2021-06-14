@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Netty | zhcao.blog</title>
-<link rel="shortcut icon" href="https://cc1024201.github.io/favicon.ico?v=1623679066528">
+<link rel="shortcut icon" href="https://cc1024201.github.io/favicon.ico?v=1623686659405">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cc1024201.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="Netty | zhcao.blog - Atom Feed" href="https://cc1024201.github.io/atom.xml">
@@ -11,12 +11,17 @@
 
 
 
-    <meta name="description" content="介绍
-Netty官网
-Netty 是一个异步的、基于事件驱动的网络应用框架，用以快速开发高性能、高可靠性的网络 IO 程序。
-Netty本质是一个NIO框架，适用于服务器通讯相关的多种应用场景。
-应用场景
-阿里分布式服务框架 Dubbo 的..." />
+    <meta name="description" content="揭开Netty 面纱
+Netty 由 Trustin Lee (韩国，Line 公司) 2004年开发
+
+本质： 网络应用程序框架
+实现：异步、事件驱动
+特性：高性能、可维护、快速开发
+用途：开发服务器和客户端
+
+
+对比JDK NIO
+Ne..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -26,7 +31,7 @@ Netty本质是一个NIO框架，适用于服务器通讯相关的多种应用场
       <div class="main-content">
         <div class="site-header">
   <a href="https://cc1024201.github.io">
-  <img class="avatar" src="https://cc1024201.github.io/images/avatar.png?v=1623679066528" alt="">
+  <img class="avatar" src="https://cc1024201.github.io/images/avatar.png?v=1623686659405" alt="">
   </a>
   <h1 class="site-title">
     zhcao.blog
@@ -86,55 +91,177 @@ Netty本质是一个NIO框架，适用于服务器通讯相关的多种应用场
                 2021-06-09
               </span>
               <span>
-                3 min read
+                5 min read
               </span>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <h1 id="介绍">介绍</h1>
-<p><a href="https://netty.io/">Netty官网</a><br>
-Netty 是一个异步的、基于事件驱动的网络应用框架，用以快速开发高性能、高可靠性的网络 IO 程序。<br>
-Netty本质是一个NIO框架，适用于服务器通讯相关的多种应用场景。</p>
-<h1 id="应用场景">应用场景</h1>
-<p>阿里分布式服务框架 Dubbo 的 Dubbo 协议默认使用 Netty 作为基础通信组件，而其中的RPC调用就是netty+反射。<br>
-<img src="https://cc1024201.github.io/post-images/1623244755374.png" alt="" loading="lazy"><br>
-经典的 Hadoop 的高性能通信和序列化组件 Avro 的 RPC 框架，默认采用 Netty 进行跨界点通信<br>
-<img src="https://cc1024201.github.io/post-images/1623244804578.png" alt="" loading="lazy"></p>
-<h1 id="netty-优势">Netty 优势</h1>
-<h2 id="原生nio存在的问题">原生NIO存在的问题</h2>
-<p>NIO 的类库和 API 繁杂，使用麻烦：需要熟练掌握 Selector、ServerSocketChannel、SocketChannel、ByteBuffer 等。<br>
-需要具备其他的额外技能：要熟悉 Java 多线程编程，因为 NIO 编程涉及到 Reactor 模式，你必须对多线程和网络编程非常熟悉，才能编写出高质量的 NIO 程序。<br>
-开发工作量和难度都非常大：例如客户端面临断连重连、网络闪断、半包读写、失败缓存、网络拥塞和异常流的处理等等。<br>
-JDK NIO 的 Bug：例如Epoll Bug，它会导致 Selector 空轮询，最终导致 CPU 100%。</p>
-<h2 id="netty的优点">Netty的优点</h2>
-<p>Netty 对 JDK 自带的 NIO 的 API 进行了封装，解决了上述问题。<br>
-异步非阻塞通信<br>
-Reactor模型优化<br>
-高效的并发编程<br>
-无锁化的串行设计理念<br>
-基于内存池的缓冲区重用机制零拷贝<br>
-提供对protobuf等高性能序列化协议支持<br>
-设计优雅：适用于各种传输类型的统一 API 阻塞和非阻塞 Socket；基于灵活且可扩展的事件模型，可以清晰地分离关注点；高度可定制的线程模型 - 单线程，一个或多个线程池.<br>
-使用方便：详细记录的 Javadoc，用户指南和示例；没有其他依赖项，JDK 5（Netty 3.x）或 6（Netty 4.x）就足够了。<br>
-高性能、吞吐量更高：延迟更低；减少资源消耗；最小化不必要的内存复制。<br>
-安全：完整的 SSL/TLS 和 StartTLS 支持。<br>
-社区活跃、不断更新：发现的 Bug 可以被及时修复，同时，更多的新功能会被加入</p>
-<h1 id="netty线程模型">Netty线程模型</h1>
+                <h1 id="揭开netty-面纱">揭开Netty 面纱</h1>
+<p>Netty 由 Trustin Lee (韩国，Line 公司) 2004年开发</p>
+<ul>
+<li>本质： 网络应用程序框架</li>
+<li>实现：异步、事件驱动</li>
+<li>特性：高性能、可维护、快速开发</li>
+<li>用途：开发服务器和客户端<br>
+<img src="https://cc1024201.github.io/post-images/1623680090236.png" alt="" loading="lazy"></li>
+</ul>
+<h1 id="对比jdk-nio">对比JDK NIO</h1>
+<p>Netty 做的更多</p>
+<ul>
+<li>支持常用应用层协议</li>
+<li>解决传输问题：粘包、半包问题</li>
+<li>支持流量整形</li>
+<li>完善的断连、idle等异常处理等</li>
+<li>规避JDK NIO bug (jdk 6 epoll bug, 异常唤醒空转导致 CPU 100%)</li>
+<li>API 更友好更强大 ByteBuffer -&gt; Netty's ByteBuf, Threadlocal -&gt; Netty's FastThreadLocal</li>
+<li>隔离变化，屏蔽细节 （隔离JDK NIO实现变化，屏蔽JDK NIO实现细节）</li>
+</ul>
+<h1 id="netty现状">Netty现状</h1>
+<p>使用到Netty的开源项目<br>
+<img src="https://cc1024201.github.io/post-images/1623681672016.PNG" alt="" loading="lazy"><br>
+<img src="https://cc1024201.github.io/post-images/1623681706948.PNG" alt="" loading="lazy"><br>
+流行协议的支持<br>
+<img src="https://cc1024201.github.io/post-images/1623681894658.PNG" alt="" loading="lazy"></p>
+<h1 id="netty怎么切换三种io模式">Netty怎么切换三种I/O模式</h1>
+<h2 id="什么是经典的三种io模式">什么是经典的三种I/O模式</h2>
+<p>生活场景：<br>
+当我们去饭店吃饭时：</p>
+<ul>
+<li>食堂排队打饭模式：排队在窗口，打好才走</li>
+<li>点单、等待被叫模式：等待被叫，好了自己去端；</li>
+<li>包厢模式：点单后菜直接被端上桌</li>
+</ul>
+<p>类比：</p>
+<ul>
+<li>
+<p>饭店 -&gt; 服务器</p>
+</li>
+<li>
+<p>饭菜 -&gt; 数据</p>
+</li>
+<li>
+<p>饭菜好了 -&gt; 数据就绪</p>
+</li>
+<li>
+<p>端菜/送菜 -&gt; 数据读取</p>
+</li>
+<li>
+<p>排队打饭模式 -&gt; BIO（阻塞I/O）(JDK 1.4 之前)</p>
+</li>
+<li>
+<p>点单、等待被叫模式 -&gt; NIO（非阻塞I/O）（JDK 1.4 2002年，java.nio 包）</p>
+</li>
+<li>
+<p>包厢模式 -&gt; AIO（异步I/O）（JDK 1.7 2011年）</p>
+</li>
+<li>
+<p>阻塞与非阻塞</p>
+<ul>
+<li>菜没好，要不要死等 -&gt; 数据就绪前要不要等待？</li>
+<li>阻塞：没有数据传过来时，读会阻塞直到有数据；缓冲区满时，写操作也会阻塞；非阻塞遇到这些情况，都是直接返回。</li>
+</ul>
+</li>
+<li>
+<p>同步与异步</p>
+<ul>
+<li>菜好了，谁端 -&gt; 数据就绪后，数据操作谁完成？</li>
+<li>数据就绪后需要自己去读是同步；数据就绪直接读好再回调给程序是异步。</li>
+</ul>
+</li>
+</ul>
+<p>Netty对三种I/O模式的支持<br>
+<img src="https://cc1024201.github.io/post-images/1623682841804.PNG" alt="" loading="lazy"></p>
+<h2 id="为什么netty仅支持nio了">为什么Netty仅支持NIO了</h2>
+<ul>
+<li>
+<p>为什么不建议（deprecate）阻塞 I/O（BIO/OIO）?<br>
+连接数高的情况西：阻塞 -&gt; 耗资源、效率低</p>
+</li>
+<li>
+<p>为什么删掉已经做好的AIO支持？</p>
+<ul>
+<li>Windows 实现成熟，但很少用来做服务器</li>
+<li>Linux 常用来做服务器，但是AIO实现不够成熟</li>
+<li>Linux 下 AIO 相比较 NIO 性能提升不明显</li>
+</ul>
+</li>
+</ul>
+<h2 id="为什么netty有多种nio实现">为什么Netty有多种NIO实现？</h2>
+<p>自己实现NIO, 并且实现的更好</p>
+<ul>
+<li>Netty 暴露了更多可控参数，例如：
+<ul>
+<li>JDK NIO 默认实现是水平触发</li>
+<li>Netty 是边缘触发（默认）和水平触发可切换</li>
+</ul>
+</li>
+<li>Netty 实现的垃圾回收更少、性能更好</li>
+</ul>
+<blockquote>
+<p>水平触发(level-triggered，也被称为条件触发)LT: 只要满足条件，就触发一个事件(只要有数据没有被获取，内核就不断通知你)<br>
+边缘触发(edge-triggered)ET: 每当状态变化时，触发一个事件。<br>
+水平触发和条件触发在IO编程的区别：<br>
+举个读socket的例子，假定经过长时间的沉默后，现在来了100个字节，这时无论边缘触发和条件触发都会产生一个read ready notification通知应用程序可读。应用程序读了50个字节，然后重新调用API等待io事件。这时条件触发的api会因为还有50个字节可读从 而立即返回用户一个read ready notification。而边缘触发的api会因为可读这个状态没有发生变化而陷入长期等待。 因此在使用边缘触发的api时，要注意每次都要读到socket返回EWOULDBLOCK为止<br>
+而使用条件触发的API 时，如果应用程序不需要写就不要关注socket可写的事件，否则就会无限次的立即返回一个write ready notification。大家常用的select就是属于条件触发这一类，长期关注socket写事件会出现CPU 100%的毛病。所以在使用Java的NIO编程的时候，在没有数据可以往外写的时候要取消写事件，在有数据往外写的时候再注册写事件。</p>
+</blockquote>
+<h1 id="netty-如何支持三种-reactor">Netty 如何支持三种 Reactor</h1>
+<ul>
+<li>什么是Reactor及三种版本？<br>
+生活场景：饭店规模变化
+<ul>
+<li>一个人包揽所有：迎宾、点菜、做饭、上菜、送客等</li>
+<li>多招几个伙计：大家一起做上面的事情</li>
+<li>进一步分工：搞一个人或多个人专门做迎宾<br>
+生活场景类比：</li>
+<li>饭店伙计：线程</li>
+<li>迎宾工作：接入连接</li>
+<li>点菜：请求
+<ol>
+<li>一个人包揽所有：迎宾、点菜、做饭、上菜、送客等 -&gt; Reactor单线程</li>
+<li>多招几个伙计：大家一起做上面的事情 -&gt; Reactor多线程</li>
+<li>进一步分工：搞一个人或多个人专门做迎宾 -&gt; 主从Reactor多线程</li>
+</ol>
+</li>
+<li>做菜：业务处理</li>
+<li>上菜：响应</li>
+<li>送客：断连</li>
+</ul>
+</li>
+</ul>
+<p>BIO -&gt; Thread-Per-Connection<br>
+<img src="https://cc1024201.github.io/post-images/1623685158125.PNG" alt="" loading="lazy"><br>
+<img src="https://cc1024201.github.io/post-images/1623685251251.PNG" alt="" loading="lazy"><br>
+NIO -&gt; Reactor<br>
+<img src="https://cc1024201.github.io/post-images/1623685294135.PNG" alt="" loading="lazy"><br>
+<img src="https://cc1024201.github.io/post-images/1623685325546.PNG" alt="" loading="lazy"><br>
+<img src="https://cc1024201.github.io/post-images/1623685376445.PNG" alt="" loading="lazy"><br>
+AIO -&gt; Proactor</p>
+<p>Ractor 是一种开发模式，模式的核心流程：<br>
+注册感兴趣的事件 -&gt; 扫描是否有感兴趣的事件发生 -&gt; 事件发生后做出相应的处理<br>
+<img src="https://cc1024201.github.io/post-images/1623685110914.PNG" alt="" loading="lazy"></p>
+<ul>
+<li>如何在Netty中使用Reactor模式<br>
+<img src="https://cc1024201.github.io/post-images/1623685436306.PNG" alt="" loading="lazy"></li>
+</ul>
+<h1 id="tcp-粘包-半包">TCP 粘包、半包</h1>
 
               </div>
               <div class="toc-container">
                 <ul class="markdownIt-TOC">
-<li><a href="#%E4%BB%8B%E7%BB%8D">介绍</a></li>
-<li><a href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF">应用场景</a></li>
-<li><a href="#netty-%E4%BC%98%E5%8A%BF">Netty 优势</a>
+<li><a href="#%E6%8F%AD%E5%BC%80netty-%E9%9D%A2%E7%BA%B1">揭开Netty 面纱</a></li>
+<li><a href="#%E5%AF%B9%E6%AF%94jdk-nio">对比JDK NIO</a></li>
+<li><a href="#netty%E7%8E%B0%E7%8A%B6">Netty现状</a></li>
+<li><a href="#netty%E6%80%8E%E4%B9%88%E5%88%87%E6%8D%A2%E4%B8%89%E7%A7%8Dio%E6%A8%A1%E5%BC%8F">Netty怎么切换三种I/O模式</a>
 <ul>
-<li><a href="#%E5%8E%9F%E7%94%9Fnio%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98">原生NIO存在的问题</a></li>
-<li><a href="#netty%E7%9A%84%E4%BC%98%E7%82%B9">Netty的优点</a></li>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%BB%8F%E5%85%B8%E7%9A%84%E4%B8%89%E7%A7%8Dio%E6%A8%A1%E5%BC%8F">什么是经典的三种I/O模式</a></li>
+<li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88netty%E4%BB%85%E6%94%AF%E6%8C%81nio%E4%BA%86">为什么Netty仅支持NIO了</a></li>
+<li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88netty%E6%9C%89%E5%A4%9A%E7%A7%8Dnio%E5%AE%9E%E7%8E%B0">为什么Netty有多种NIO实现？</a></li>
 </ul>
 </li>
-<li><a href="#netty%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B">Netty线程模型</a></li>
+<li><a href="#netty-%E5%A6%82%E4%BD%95%E6%94%AF%E6%8C%81%E4%B8%89%E7%A7%8D-reactor">Netty 如何支持三种 Reactor</a></li>
+<li><a href="#tcp-%E7%B2%98%E5%8C%85-%E5%8D%8A%E5%8C%85">TCP 粘包、半包</a></li>
 </ul>
 
               </div>
